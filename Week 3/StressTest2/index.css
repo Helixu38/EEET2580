@@ -1,0 +1,7 @@
+.country-card {
+    margin-bottom: 20px;
+  }
+  .country-card img {
+    max-width: 100%;
+    height: auto;
+  }

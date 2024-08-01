@@ -1,0 +1,14 @@
+.country-card {
+    margin-bottom: 20px;
+  }
+.country-card img {
+    max-width: 100%;
+    height: 250px;
+}
+.container_search{
+    margin: 5px;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }

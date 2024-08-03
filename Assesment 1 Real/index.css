@@ -1,0 +1,64 @@
+.staff-card{
+    margin-bottom: 20px; 
+    
+}
+
+.staff-card img {
+    max-width: 72px;
+    height: 72px;
+}
+
+.nav-bar{
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding-top: 10px;
+}
+.nav-website-name{
+    margin-left: 10px;
+}
+
+.nav-content{
+    display: flex;
+    gap:2pc;
+    margin-right: 10px;
+    color: lightgray;
+}
+
+.nav-home{
+    color: black;
+}
+
+.staff-list-heading{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.search-bar-container{
+}
+
+.card-body p{
+    text-align: center;
+}
+
+.card-body img{
+    max-width: 72px;
+    height: 72px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+}
+
+.card{
+    margin-bottom: 10px;
+}
+
+.card-body img:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+#card-img:hover + #card-entire{
+    background-color: red;
+}
+

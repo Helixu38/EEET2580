@@ -23,10 +23,17 @@ public class SpringBootArchitectureApplication implements CommandLineRunner {
 	
 		//save a few customers
 		repository.save(new Customer("Jack", "Bauer"));
-		repository.save(new Customer("Chloe", "O'Brian"));
+		repository.save(new Customer("Chloe", "Brian"));
 		repository.save(new Customer("Kim", "Bauer"));
 		repository.save(new Customer("David", "Palmer"));
 		repository.save(new Customer("Michelle", "Dessler"));
+		repository.save(new Customer("Jack1", "Bauer1"));
+		repository.save(new Customer("Chloe1", "O'Brian1"));
+		repository.save(new Customer("Kim1", "Bauer1"));
+		repository.save(new Customer("David1", "Palmer1"));
+		repository.save(new Customer("Michelle1", "Dessler1"));
+        repository.save(new Customer("Jack2", "Bauer2"));
+        repository.save(new Customer("Chloe2", "O'Brian2"));
 
 		// fetch all customers
 		System.out.println("Customers found with findAll():");

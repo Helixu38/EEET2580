@@ -1,11 +1,12 @@
 const HOST_URL = "http://localhost:8080";
 const CUSTOMER_SERVICE_URL = `${HOST_URL}/customer/`;
 const CUSTOMER_SERVICE_URL_ALL_USERS = `${CUSTOMER_SERVICE_URL}all`;
+const CUSTOMER_SERVICE_URL_SEARCH_USERS = `${CUSTOMER_SERVICE_URL}search`;
 
 let currentPage = 0; // Track the current page
 const pageSize = 5; // Set the number of items per page
-let sortBy = "";
-let order = "";
+let sortBy = 'id'; // Default sort field
+let order = 'Ascending'; // Default sort order
 
 function renderUserRow(user) {
     return `
@@ -127,9 +128,22 @@ function closeUpdateModal() {
     document.getElementById("updateUserModal").style.display = "none";
 }
 
-async function loadUserTable(pageNo = 0) {
+
+
+// Function to load user table
+async function loadUserTable(pageNo = 0, keyword = '') {
+    let url;
+
+    if (keyword) {
+        // Use search URL if a keyword is provided
+        url = `${CUSTOMER_SERVICE_URL_SEARCH_USERS}?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&order=${order}&keyword=${keyword}`;
+    } else {
+        // Use all users URL if no keyword is provided
+        url = `${CUSTOMER_SERVICE_URL_ALL_USERS}?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&order=${order}`;
+    }
+
     // Get User Data
-    let customerResponse = await sendHttpRequest(`${CUSTOMER_SERVICE_URL_ALL_USERS}?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&order=${order}`);
+    let customerResponse = await sendHttpRequest(url);
 
     console.log(customerResponse);
 
@@ -147,6 +161,30 @@ async function loadUserTable(pageNo = 0) {
     // Update pagination controls
     updatePaginationControls(pageNo, totalPages);
 }
+
+
+
+// Function to search for users
+function search() {
+    const keyword = document.getElementById("search-input").value; // Get the search keyword
+    loadUserTable(currentPage, keyword); // Load the user table with the search keyword
+}
+
+// Attach the search function to the input
+document.getElementById("search-input").addEventListener("keyup", search);
+
+// Initial load of all users on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserTable(currentPage); // Load all users initially
+});
+
+// Attach the search function to the input
+document.getElementById("search-input").addEventListener("keyup", search);
+
+// Initial load of all users on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserTable(currentPage); // Load all users initially
+});
 
 function updatePaginationControls(currentPage, totalPages) {
     const paginationContainer = document.getElementById("paginationControls");
@@ -203,18 +241,20 @@ function updatePaginationControls(currentPage, totalPages) {
     // Append the pagination list to the container
     paginationContainer.appendChild(paginationList);
 }
-//Sort function 
+// Sorting function
 function setSorting(newSortBy) {
-    sortBy = newSortBy; // Update the sorting field
-
-    if (order === "Ascending") {
-        order = "Descending"; 
+    if (sortBy === newSortBy) {
+        // Toggle order if the same field is clicked
+        order = (order === 'Ascending') ? 'Descending' : 'Ascending';
     } else {
-        order = "Ascending"; 
+        // Set new sort field and default to ascending
+        sortBy = newSortBy;
+        order = 'Ascending';
     }
 
-
-    loadUserTable(currentPage);
+    // Reload the user table with the current keyword (if any)
+    const keyword = document.getElementById("search-input").value;
+    loadUserTable(currentPage, keyword);
 }
 
 async function sendHttpRequest(url, method = "GET", toJson = true, body = null) {

@@ -26,7 +26,15 @@ public class CustomerController {
         Page<Customer> customers = customerService.getAllCustomers(pageSize, pageNo, sortBy , order);
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
-
+    @GetMapping("/search")
+    ResponseEntity<Page<Customer>> searchCustomer(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                                  @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+                                                  @RequestParam(value = "sortBy" , defaultValue = "" , required = false) String sortBy,
+                                                  @RequestParam(value = "order" , defaultValue = "" , required = false) String order,
+                                                  @RequestParam("keyword") String keyword){
+        Page<Customer> customers = customerService.getCustomerByKeyword(pageSize,pageNo,sortBy,order,keyword);
+        return new ResponseEntity<>(customers,HttpStatus.OK);
+    }
 
     @PutMapping("/{id}")
     ResponseEntity<Optional<Customer>> updateCustomer(@PathVariable int id, @RequestBody Customer customer) {

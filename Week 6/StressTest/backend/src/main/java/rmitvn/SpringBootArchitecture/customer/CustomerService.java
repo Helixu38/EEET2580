@@ -20,6 +20,48 @@ public class CustomerService {
         return customerRepository.findById(id);
     }
 
+    Page<Customer> getCustomerByKeyword(int pageSize, int pageNo , String sortBy , String order , String keyword)
+    {
+        if (sortBy != null)
+        {
+            if(sortBy.equals("firstName"))
+            {
+                if(order.equals("Ascending")){
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("firstName").ascending());
+                    return customerRepository.findByLastNameContaining(keyword, firstPageWithTwoElements);
+                } else if (order.equals("Descending"))
+                {
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("firstName").descending());
+                    return customerRepository.findByLastNameContaining(keyword, firstPageWithTwoElements);
+                }
+                return Page.empty();
+            } else if (sortBy.equals("lastName")) {
+                if(order.equals("Ascending")){
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("lastName").ascending());
+                    return customerRepository.findByLastNameContaining(keyword,firstPageWithTwoElements);
+                } else if (order.equals("Descending"))
+                {
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("lastName").descending());
+                    return customerRepository.findByLastNameContaining(keyword,firstPageWithTwoElements);
+                }
+                return Page.empty();
+
+            } else if (sortBy.equals("id")) {
+                if(order.equals("Ascending")){
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("id").ascending());
+                    return customerRepository.findByLastNameContaining(keyword,firstPageWithTwoElements);
+                } else if (order.equals("Descending"))
+                {
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("id").descending());
+                    return customerRepository.findByLastNameContaining(keyword,firstPageWithTwoElements);
+                }
+                return Page.empty();
+            }
+        }
+        Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize);
+        return customerRepository.findAll(firstPageWithTwoElements);
+    }
+
     Page<Customer> getAllCustomers(int pageSize, int pageNo , String sortBy , String order) {
         if (sortBy != null)
         {

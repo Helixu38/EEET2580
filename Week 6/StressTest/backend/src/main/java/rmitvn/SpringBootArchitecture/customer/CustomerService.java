@@ -87,6 +87,16 @@ public class CustomerService {
                 }
                 return Page.empty();
 
+            } else if (sortBy.equals("id")) {
+                if(order.equals("Ascending")){
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("id").ascending());
+                    return customerRepository.findAll(firstPageWithTwoElements);
+                } else if (order.equals("Descending"))
+                {
+                    Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize, Sort.by("id").descending());
+                    return customerRepository.findAll(firstPageWithTwoElements);
+                }
+                return Page.empty();
             }
         }
         Pageable firstPageWithTwoElements = PageRequest.of(pageNo, pageSize);

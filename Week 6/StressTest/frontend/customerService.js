@@ -6,7 +6,7 @@ const CUSTOMER_SERVICE_URL_SEARCH_USERS = `${CUSTOMER_SERVICE_URL}search`;
 let currentPage = 0; // Track the current page
 const pageSize = 5; // Set the number of items per page
 let sortBy = 'id'; // Default sort field
-let order = 'Ascending'; // Default sort order
+let order = 'Descending'; // Default sort order
 
 function renderUserRow(user) {
     return `
@@ -255,6 +255,48 @@ function setSorting(newSortBy) {
     // Reload the user table with the current keyword (if any)
     const keyword = document.getElementById("search-input").value;
     loadUserTable(currentPage, keyword);
+
+    // Update sorting icons
+    updateSortingIcons();
+}
+
+// Function to update sorting icons
+function updateSortingIcons() {
+    const idHeader = document.getElementById("idSortIcon");
+    const idHeaderDown = document.getElementById("idSortIconDown");
+    const firstNameHeader = document.getElementById("firstNameSortIcon");
+    const firstNameHeaderDown = document.getElementById("firstNameSortIconDown");
+    const lastNameHeader = document.getElementById("lastNameSortIcon");
+    const lastNameHeaderDown = document.getElementById("lastNameSortIconDown");
+
+    // Reset icons
+    idHeader.style.display = 'none';
+    idHeaderDown.style.display = 'none';
+    firstNameHeader.style.display = 'none';
+    firstNameHeaderDown.style.display = 'none';
+    lastNameHeader.style.display = 'none';
+    lastNameHeaderDown.style.display = 'none';
+
+    // Set icons based on current sorting
+    if (sortBy === 'firstName') {
+        if (order === 'Ascending') {
+            firstNameHeader.style.display = 'inline'; // Show up icon
+        } else {
+            firstNameHeaderDown.style.display = 'inline'; // Show down icon
+        }
+    } else if (sortBy === 'lastName') {
+        if (order === 'Ascending') {
+            lastNameHeader.style.display = 'inline'; // Show up icon
+        } else {
+            lastNameHeaderDown.style.display = 'inline'; // Show down icon
+        }
+    } else if (sortBy === 'id') {
+        if (order === 'Ascending') {
+            idHeader.style.display = 'inline'; // Show up icon
+        } else {
+            idHeaderDown.style.display = 'inline'; // Show down icon
+        }
+    }
 }
 
 async function sendHttpRequest(url, method = "GET", toJson = true, body = null) {
